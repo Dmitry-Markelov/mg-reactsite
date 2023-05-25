@@ -1,18 +1,17 @@
-const template = new Template();
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-window.requestAnimFrame = (function() {
-    return window.requestAnimationFrame ||
-        window.webkit.requestAnimationFrame ||
-        window.moz.requestAnimationFrame ||
-        window.o.requestAnimationFrame ||
-        window.ms.requestAnimationFrame ||
-        function(callback) {
-            window.setTimeout(callback, 1000/60);
-        };
-    
-})
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
-window.onload = () => {
-    const app = new App({ id: 'app', template: template.AppTemplate })
-    app.componentList.forEach((comp, index) => { if (index !== 0) comp.hide() })
-}
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

@@ -1,5 +1,5 @@
 import React from "react";
-import './App.css'
+// import './App.css'
 
 export default class Header extends React.Component {
     constructor(props) {
@@ -9,13 +9,13 @@ export default class Header extends React.Component {
     render() {
         return(<div className="header">
             <button onClick = {() =>
-            this.showComponent('Calculator')}
+            this.showComponent('calculator')}
             > Calculator </button>
             <button onClick = {() =>
-            this.showComponent('Graph2D')}
+            this.showComponent('graph2D')}
             > Graph2D </button>
             <button onClick = {() =>
-            this.showComponent('Graph3D')}
+            this.showComponent('graph3D')}
             > Graph3D </button> 
         </div>);
     }
