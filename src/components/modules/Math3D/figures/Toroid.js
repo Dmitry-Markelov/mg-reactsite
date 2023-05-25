@@ -1,16 +1,17 @@
-class Ellipsoid extends Figure {
-    constructor(x = 12, y = 7, z = 9, count = 20) {
+import { Point, Polygon, Edge, Figure } from "../entities";
+class Toroid extends Figure {
+    constructor(R = 12, r = 7, count = 20) {
         super();
         //points
         const points = [];
         for(let i = 0; i <= count + 1; i++) { //кольца
-            const T = Math.PI * i / (count + 1);
+            const T = 2 * Math.PI * i / count;
             for(let j = 0; j < count; j++) {
                 const p = 2 * Math.PI * j / count;
                 points.push(new Point(
-                    x * Math.sin(T) * Math.cos(p),
-                    y * Math.cos(T),
-                    z * Math.sin(T) * Math.sin(p)
+                    (R + r * Math.cos(T)) * Math.cos(p),
+                    (R + r * Math.cos(T)) * Math.sin(p),
+                    r * Math.sin(T)
                 ));
             }
         }
@@ -46,20 +47,14 @@ class Ellipsoid extends Figure {
                         i + count]));
                 }
             }
-            
         }
-        polygons.push(new Polygon([
-            points.length - 1 - count,
-            points.length - 2 * count,
-            points.length - count,
-            points.length - 1
-        ]));
-        
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;
     }
 }
+
+export default Toroid;
 
 // x = r * sin(T) * cos(p)
 // y = r * sin(T) * sin(p)

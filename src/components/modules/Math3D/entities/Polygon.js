@@ -1,4 +1,6 @@
-class Polygon {
+import Point from './Point';
+
+export default class Polygon {
     constructor(points = [], color = '#f77f00') {
         this.points = points;
         this.center = new Point;
@@ -20,8 +22,5 @@ class Polygon {
     }
     rgbToHex(r, g, b) {
         return `rgb(${r},${g},${b})`;
-    }
-    changeColor() {
-
     }
 }

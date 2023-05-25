@@ -1,3 +1,4 @@
+import { Point, Polygon, Edge, Figure } from "../entities";
 class Cube extends Figure {
     constructor(x = -5, y = -5, z = -5, size = 10) {
         super();
@@ -33,3 +34,5 @@ class Cube extends Figure {
         ]
     }
 }
+
+export default Cube;

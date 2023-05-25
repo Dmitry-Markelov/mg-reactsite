@@ -1,17 +1,18 @@
-class Toroid extends Figure {
-    constructor(R = 12, r = 7, count = 20) {
+import { Point, Polygon, Edge, Figure } from "../entities";
+class Sphere extends Figure {
+    constructor(r = 10, count = 80) {
         super();
         //points
         const points = [];
-        for(let i = 0; i <= count + 1; i++) { //кольца
-            const T = 2 * Math.PI * i / count;
+        for(let i = 0; i <= count; i++) { //кольца
+            const T = Math.PI / count * i;
             for(let j = 0; j < count; j++) {
-                const p = 2 * Math.PI * j / count;
+                const p = 2 * Math.PI / count * j;
                 points.push(new Point(
-                    (R + r * Math.cos(T)) * Math.cos(p),
-                    (R + r * Math.cos(T)) * Math.sin(p),
-                    r * Math.sin(T)
-                ));
+                    r * Math.sin(T) * Math.cos(p),
+                    r * Math.cos(T),
+                    r * Math.sin(T) * Math.sin(p),
+                ))
             }
         }
         //edges
@@ -37,21 +38,32 @@ class Toroid extends Figure {
                         i,
                         i + 1 - count,
                         i + 1,
-                        i + count]));
+                        i + count]
+                        ));
                 } else {
                     polygons.push(new Polygon([
                         i,
                         i + 1,
                         i + 1 + count,
-                        i + count]));
+                        i + count]
+                        ));
                 }
             }
         }
+        polygons.push(new Polygon([
+            points.length - 1 - count,
+            points.length - 2 * count,
+            points.length - count,
+            points.length - 1
+        ],));
+
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;
     }
 }
+
+export default Sphere;
 
 // x = r * sin(T) * cos(p)
 // y = r * sin(T) * sin(p)

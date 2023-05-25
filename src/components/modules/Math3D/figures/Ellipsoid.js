@@ -1,17 +1,18 @@
-class Sphere extends Figure {
-    constructor(r = 10, count = 80) {
+import { Point, Polygon, Edge, Figure } from "../entities";
+class Ellipsoid extends Figure {
+    constructor(x = 12, y = 7, z = 9, count = 20) {
         super();
         //points
         const points = [];
-        for(let i = 0; i <= count; i++) { //кольца
-            const T = Math.PI / count * i;
+        for(let i = 0; i <= count + 1; i++) { //кольца
+            const T = Math.PI * i / (count + 1);
             for(let j = 0; j < count; j++) {
-                const p = 2 * Math.PI / count * j;
+                const p = 2 * Math.PI * j / count;
                 points.push(new Point(
-                    r * Math.sin(T) * Math.cos(p),
-                    r * Math.cos(T),
-                    r * Math.sin(T) * Math.sin(p),
-                ))
+                    x * Math.sin(T) * Math.cos(p),
+                    y * Math.cos(T),
+                    z * Math.sin(T) * Math.sin(p)
+                ));
             }
         }
         //edges
@@ -37,30 +38,31 @@ class Sphere extends Figure {
                         i,
                         i + 1 - count,
                         i + 1,
-                        i + count]
-                        ));
+                        i + count]));
                 } else {
                     polygons.push(new Polygon([
                         i,
                         i + 1,
                         i + 1 + count,
-                        i + count]
-                        ));
+                        i + count]));
                 }
             }
+            
         }
         polygons.push(new Polygon([
             points.length - 1 - count,
             points.length - 2 * count,
             points.length - count,
             points.length - 1
-        ],));
-
+        ]));
+        
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;
     }
 }
+
+export default Ellipsoid;
 
 // x = r * sin(T) * cos(p)
 // y = r * sin(T) * sin(p)
