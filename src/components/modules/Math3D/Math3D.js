@@ -1,5 +1,5 @@
-export default class Math3D {
-    constructor({ WIN }) {
+class Math3D {
+    constructor({WIN}) {
         this.WIN = WIN;
     }
 
@@ -29,41 +29,45 @@ export default class Math3D {
         return c;
     }
 
-    zoom(delta, point) {
-        const array = this.mult(
-            [[delta, 0, 0, 0],
+    zoom(delta) {
+        return [
+            [delta, 0, 0, 0],
             [0, delta, 0, 0],
             [0, 0, delta, 0],
-            [0, 0, 0, 1]],
-            [point.x, point.y, point.z, 1]);
-        point.makeFromArray(array);
+            [0, 0, 0, 1]];
     }
 
-    transdorm(matrix, point) {
-        const result = this.mult(matrix, [point.x, point.y, point.z, 0]);
-        point.x = result[0];
-        point.y = result[1];
-        point.z = result[2];
-    }
-
-    rotateOY(alpha, point) {
-        const array = this.mult([
+    rotateOY(alpha) {
+        return [
             [Math.cos(alpha), 0, -Math.sin(alpha), 0],
             [0, 1, 0, 0],
             [Math.sin(alpha), 0, Math.cos(alpha), 0],
-            [0, 0, 0, 1]],
-            [point.x, point.y, point.z, 1]);
-        point.makeFromArray(array);
+            [0, 0, 0, 1]];
     }
 
-    rotateOX(alpha, point) {
-        const array = this.mult([
+    rotateOX(alpha) {
+        return [
             [1, 0, 0, 0],
             [0, Math.cos(alpha), Math.sin(alpha), 0],
             [0, -Math.sin(alpha), Math.cos(alpha), 0],
-            [0, 0, 0, 1]],
-            [point.x, point.y, point.z, 1]);
-        point.makeFromArray(array);
+            [0, 0, 0, 1]];
+
+    }
+
+    rotateOZ(alpha) {
+        return [
+            [Math.cos(alpha), Math.sin(alpha), 0, 0],
+            [-Math.sin(alpha), Math.cos(alpha), 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]];
+    }
+    
+    move({dx = 0, dy = 0, dz = 0}) {
+        return [
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [dx, dy, dz, 1]];
     }
 
     calcCenters(figure) {
@@ -82,145 +86,56 @@ export default class Math3D {
 
     }
 
-    calcDitance(figure, endPoint, name) {
+    calcDistance(figure, endPoint, name) {
         figure.polygons.forEach(polygon => {
             polygon[name] = Math.sqrt(
                 Math.pow(endPoint.x - polygon.center.x, 2) +
                 Math.pow(endPoint.y - polygon.center.y, 2) +
-                Math.pow(endPoint.z - polygon.center.z, 2)
-            )
-        })
+                Math.pow(endPoint.z - polygon.center.z, 2));
+        });
+    }
+
+    multMatrix(a, b) {
+        const length = 4;
+        const matrix = [];
+        for (let i = 0; i < length; i++) {
+            matrix.push([]);
+            for (let j = 0; j < length; j++) {
+                let s = 0;
+                for (let k = 0; k < length; k++) {
+                    s += a[k][j] * b[i][k]
+                }
+                matrix[i][j] = s;
+            }
+        }
+        return matrix;
+    }
+
+    getTransformMatrix(...args) {
+        return args.reduce((s, t) => this.multMatrix(s, t),
+                [[1, 0, 0, 0],
+                [0, 1, 0, 0],
+                [0, 0, 1, 0],
+                [0, 0, 0, 1],
+                ]);
+    };
+
+    transform(matrix, point) {
+        const result = this.mult(matrix, [point.x,point.y,point.z,1]);
+        point.makeFromArray(result);
+    }
+
+    calcIllumination(distance, lumen) {
+        const res = distance ? lumen / Math.pow(
+            distance, 3
+        ) : 1;
+        return res > 1 ? 1 : res;
     }
 
     sortByArtistAlgoritm(polygons) {
         polygons.sort((a, b) => b.distance - a.distance)
     }
 
-    caclIllumination(distance, lumen) {
-        const res = distance ? lumen / Math.pow(distance, 3) : 1;
-        return res <= 1 ? res : 1;
-    }
-
-    calcVector(a, b) {
-        return {
-            x: b.x - a.x,
-            y: b.y - a.y,
-            z: b.z - a.z
-        }
-    }
-
-    VectorProd(a, b) {
-        return {
-            x: a.y * b.z - a.z * b.y,
-            y: -a.x * b.z + a.z * b.x,
-            z: a.x * b.y - a.y * b.x
-        }
-    }
-
-    calcVectorModule(a) {
-        return Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z)
-    }
-
-    calcRadius(figure) {
-        const points = figure.points;
-        figure.polygons.forEach(polygon => {
-            const center = polygon.center;
-            const p1 = points[polygon.points[0]];
-            const p2 = points[polygon.points[1]];
-            const p3 = points[polygon.points[2]];
-            const p4 = points[polygon.points[3]];
-            polygon.R = (
-                this.calcVectorModule(this.calcVector(center, p1)) +
-                this.calcVectorModule(this.calcVector(center, p2)) +
-                this.calcVectorModule(this.calcVector(center, p3)) +
-                this.calcVectorModule(this.calcVector(center, p4))
-            ) / 4;
-        });
-    }
-
-    calcShadow(polygon, figures, LIGHT) {
-        const M1 = polygon.center;
-        const r = polygon.R;
-        const s = this.calcVector(M1, LIGHT);
-        for (let i = 0; i < figures.length; i++) {
-            if (polygon.figureIndex === i) {
-                continue;
-            }
-            for (let j = 0; j < figures[i].polygons.length; j++) {
-                const polygonZ = figures[i].polygons[j];
-                const M0 = polygonZ.center;
-                if (polygon.lumen < polygonZ.lumen) {
-                    continue;
-                }
-                const dark = this.calcVectorModule(this.VectorProd(this.calcVector(M0, M1), s)) / this.calcVectorModule(s);
-                if (dark < r) return {
-                    isShadow: true,
-                    dark: dark / 1.3
-                }
-            }
-        }
-
-        return {
-            isShadow: false,
-
-        }
-    }
-
-    /**************вращения**************/
-    rotateOx(alpha) {
-        return [
-            [1, 0, 0, 0],
-            [0, Math.cos(alpha), Math.sin(alpha), 0],
-            [0, -Math.sin(alpha), Math.cos(alpha), 0],
-            [0, 0, 0, 1]
-        ];
-    }
-
-    rotateOy(alpha) {
-        return [
-            [Math.cos(alpha), 0, -Math.sin(alpha), 0],
-            [0, 1, 0, 0],
-            [Math.sin(alpha), 0, Math.cos(alpha), 0],
-            [0, 0, 0, 1]
-        ];
-    }
-
-    rotateOz(alpha) {
-        return [
-            [Math.cos(alpha), Math.sin(alpha), 0, 0],
-            [-Math.sin(alpha), Math.cos(alpha), 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 0, 1]
-        ];
-    }
-
-    /************************************/
-    multMatrixes(a, b) {
-        const c = [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0]
-        ];
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                let s = 0;
-                for (let k = 0; k < 4; k++) {
-                    s += a[i][k] * b[k][j];
-                }
-                c[i][j] = s;
-            }
-        }
-        return c;
-    }
-
-    /***********************************************/
-
-    //преобразования матриц
-    transform(matrix, point) {
-        const result = this.mult(matrix, [point.x, point.y, point.z, 1]);
-        point.x = result[0];
-        point.y = result[1];
-        point.z = result[2];
-    }
 }
+
+export default Math3D;

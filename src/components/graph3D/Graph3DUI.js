@@ -1,43 +1,59 @@
-import React from "react"
+import {useState} from "react"
+import {useCallback} from "react";
+import MyCheckBox from "../myCheckBox/MyCheckBox";
+import { Cube, Ellipsoid, Sphere, Toroid } from "../modules/Math3D";
 
-export default class Graph3DUI extends React.Component{
-    constructor(props) {
-        super(props);
-        this.showHidePoints = props.showHidePoints;
-        this.showHideEdge = props.showHideEdge;
-        this.showHidePolygons = props.showHidePolygons;
-        this.state = {showPanel: false};
+const Graph3DUI = ({show, updateVarPoints, updateVarEdges, updateVarPolygons, updateScene}) => {
+    const [showPanel, setShowPanel] = useState(false);
+    const figures= {
+        Cube: new Cube(),
+        Sphere: new Sphere(),
+        Toroid: new Toroid(),
+        Ellipsoid: new Ellipsoid(),
     }
-    showHidePanel() {
-        this.setState({showPanel: !this.state.showPanel});
-    }
-    render() {
-        return(<div>
-            <button onClick={() => this.showHidePanel()}>{this.state.showPanel ? '<-':'->'}
+    const showHidePanel = useCallback(() => {
+        setShowPanel(!showPanel)},
+        [setShowPanel,showPanel]
+    );
+    const selectFigure = useCallback((event) => {
+        updateScene(figures[event.target.value])},
+        [updateScene, figures]);
+    return (
+        <div>
+            <button onClick={showHidePanel}>
+                {showPanel? '<-':'->'}
             </button>
-            {this.state.showPanel &&<div>
-                <input
-                    id = 'point=checkbox'
-                    type = 'checkbox'
-                    onClick = {(event) => this.showHidePoints(event.target.checked)}
-                />
-                <input
-                    id = 'edges=checkbox'
-                    type = 'checkbox'
-                    onClick = {(event) => this.showHidePoints(event.target.checked)}
-                />
-                <input
-                    id = 'polygons=checkbox'
-                    type = 'checkbox'
-                    onClick = {(event) => this.showHidePoints(event.target.checked)}
-                />
-                <label
-                htmlFor="points=checkbox">Точки</label>
-                <label
-                htmlFor="edges=checkbox">Грани</label>
-                <label
-                htmlFor="polygons=checkbox">Полигоны</label>
-            </div>}
-        </div>)
-    }
+            {
+                showPanel&&(<div>
+                    <MyCheckBox
+                        text = 'Точки'
+                        checked = {show.pointCheck}
+                        onClick={updateVarPoints}
+                        />
+                    <MyCheckBox
+                        text = 'Ребра'
+                        checked = {show.edgeCheck}
+                        onClick = {updateVarEdges}
+                        />
+                    <MyCheckBox
+                        text = 'Полигоны'
+                        checked = {show.polygonsCheck}
+                        onClick = {updateVarPolygons}
+                        />
+                    </div>)
+            }
+            <div>
+                <select onChange={selectFigure}>
+                    {Object.keys(figures).map((key, index) => (
+                        <option
+                        key = {index}
+                        className="figure"
+                        value = {key}>{key}</option>
+                    ))}
+                </select>
+            </div>
+        </div>
+    )
 }
+
+export default Graph3DUI;

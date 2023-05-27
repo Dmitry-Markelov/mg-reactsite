@@ -15,6 +15,11 @@ class Graph {
         this.canvas.addEventListener('mousemove', mousemove);
         this.canvas.addEventListener('mouseleave', mouseleave);
     }
+
+    render() {
+        this.context.drawImage(this.canvas, 0, 0);
+    }
+
     xs(x) { return (x - this.WIN.LEFT) * this.canvas.width / this.WIN.WIDTH }
     ys(y) { return (this.WIN.HEIGHT + this.WIN.BOTTOM - y) * this.canvas.height / this.WIN.HEIGHT; }
 
@@ -25,6 +30,7 @@ class Graph {
         this.context.fillStyle = '#fafafa';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
+
     line(x1, y1, x2, y2, color = '#000', width = 1, isDashed = false) {
         this.context.beginPath();
         this.context.lineWidth = width;
@@ -40,6 +46,7 @@ class Graph {
         this.context.closePath();
         this.context.setLineDash([]);
     }
+
     point(x, y, color = '#1a2b3c', size = 2) {
         this.context.beginPath();
         this.context.strokeStyle = color;
@@ -49,12 +56,14 @@ class Graph {
         this.context.stroke();
         this.context.closePath();
     }
+
     text(x, y, text, color = "black", font = "12px sans-serif", align = "center") {
         this.context.font = font;
         this.context.fillStyle = color;
         this.context.textAlign = align;
         this.context.fillText(text, this.xs(x), this.ys(y));
     }
+
     polygon(points, color = '#090b') {
         this.context.beginPath();
         this.context.fillStyle = color;
@@ -70,3 +79,5 @@ class Graph {
         // this.context.stroke();
     } //переписать как на фото! (ужже не надо)
 }
+
+export default Graph;

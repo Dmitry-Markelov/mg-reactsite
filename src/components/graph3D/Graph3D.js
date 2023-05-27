@@ -1,193 +1,186 @@
-import React from 'react';
+import { useEffect } from 'react';
 import Graph from '../modules/Graph/Graph';
 import Math3D, {Point, Light, Cube, Ellipsoid, Sphere, Toroid} from '../modules/Math3D';
 import Graph3DUI from './Graph3DUI';
+import useGraph from '../modules/Graph/UseGraph';
 // import './Graph3D.css';
 
-export default class Graph3D extends React.Component {
-    constructor(props) {
-        super(props);
-        this.WIN = {
-            LEFT: -10,
-            BOTTOM: -10,
-            WIDTH: 20,
-            HEIGHT: 20,
-            FOCUS: new Point(0, 0, 30),
-            CAMERA: new Point(0, 0, 50)
-        }
-        this.LIGHT = new Light(-20, 20, 10, document.getElementById('lightPower').value);
+const Graph3D = () => {
+    const WIN = {
+        LEFT: -10,
+        BOTTOM: -10,
+        WIDTH: 20,
+        HEIGHT: 20,
+        FOCUS: new Point(0, 0, 30),
+        CAMERA: new Point(0, 0, 50)
+    };
 
-        // this.scene = {
-        //     cube: new Cube,
-        //     sphere: new Sphere,
-        //     ellipsoid: new Ellipsoid,
-        //     toroid: new Toroid
-        // };
-        this.scene = [new Cube()];
-
-        this.show = {
-            showPoints: false,
-            showEdges: false,
-            showPolygons: true,
-        }
-
-        this.math3D = new Math3D({ WIN: this.WIN });
-        this.canRotate = false;
+    const LIGHT = new Light(20, 20, 10, 1e4);
+    const math3D = new Math3D({ WIN });
+    let scene = [new Cube()];
+    const show = {
+        edgeCheck: false,
+        pointCheck: false,
+        polygonsCheck: true,
+        canRotate: false
     }
+    
+    const Graph = useGraph(renderScene);
+    let graph = null;
 
-    componentDidMount() {
-
-        this.graph = new Graph({
-            id: 'canvas3D',
-            WIN: this.WIN,
+    useEffect(() => {
+        graph = Graph({
+            id: 'canvas3d',
+            WIN: WIN,
             width: 700,
             height: 700,
             callbacks: {
-                wheel: (event) => this.wheel(event),
-                mouseup: () => this.mouseup(),
-                mousedown: () => this.mousedown(),
-                mousemove: (event) => this.mousemove(event),
-                mouseleave: () => this.mouseleave()
+                wheel,
+                mouseup,
+                mousedown,
+                mousemove,
+                mouseleave,
             }
         });
 
-        //FPS
-        let FPS = 0;
-        this.FPS = 0;
-        let lastTimestamp = Date.now();
-        const animLoop = () => {
-            FPS++;
-            const timestamp = Date.now();
-            if (timestamp - lastTimestamp >= 1000) {
-                this.FPS = FPS;
-                FPS = 0;
-                lastTimestamp = timestamp;
-            }
-            this.printScene(this.selected);
-            this.request = window.requestAnimationFrame(animLoop);
+        const interval = setInterval(() => scene.forEach(figure => {
+            figure.doAnimation(math3D);
+        }, 20))
+
+        return () => {
+            clearInterval(interval);
+            //window.cancelAnimationFrame();
+            graph = null;
         }
-        
-        animLoop();
-    }
-    componentWillUnmount() {
-        window.cancelAnimationFrame(this.request);
-        this.graph = null;
-    }
+    }, [useGraph, renderScene, graph, Graph, clearInterval]);
 
-    showHidePoints(value) {
-        this.showPoints = value;
-    }
-    showHideEdges(value) {
-        this.showEdges = value;
-    }
-    showHidePolygons(value) {
-        this.showPolygons = value;
-    }
-
-    wheel(event) {
+    const wheel = (event) => {
         const delta = 1 + event.wheelDelta / 1200;
-        this.selected.points.forEach(point => {
-            this.math3D.zoom(delta, point);
-        });
-        this.printScene(this.selected);
+        scene.forEach(figure => {
+            figure.points.forEach(point => {
+                const matrix = math3D.zoom(delta);
+                math3D.transform(matrix, point)
+            });
+        })
     }
-    
-    mouseup() {
-        this.canRotate = false;
-    }
-    
-    mousedown() {
-        this.canRotate = true;
-    }
-    
-    mouseleave() {
-        this.canRotate = false;
-    }
-    
-    mousemove(event) {
-        if (this.canRotate) {
+    const mousemove = (event) => {
+        if (show.canRotate) {
             const { movementX, movementY } = event;
-            this.selected.points.forEach(point => {
-                this.math3D.rotateOY(movementX / 180, point);
-                this.math3D.rotateOX(movementY / 180, point);
+            scene.forEach(figure => {
+                figure.points.forEach(point => {
+                    const OYmatrix = math3D.rotateOY(movementX / 180);
+                    const OXmatrix = math3D.rotateOX(movementY / 180)
+                    math3D.transform(OYmatrix, point);
+                    math3D.transform(OXmatrix, point);
+                });
             });
-            // this.printScene(this.selected);
         }
     }
-    
-    updateScene(newFigure) {
-        this.scene = [newFigure];
+    const mouseup = () => {
+        show.canRotate = false;
     }
 
-    clear() {
-        this.graph.clear();
+    const mousedown = () => {
+        show.canRotate = true;
     }
-    
-    printScene(figure) {
-        this.clear();
-        if (this.show.showPolygons) {
-            this.math3D.calcCenters(figure);
-            this.math3D.calcDistance(figure, this.WIN.CAMERA, 'distance');
-            this.math3D.calcDistance(figure, this.LIGHT, 'lumen')
-            this.math3D.sortByArtistAlgoritm(figure.polygons);
+
+    const mouseleave = () => {
+        show.canRotate = false;
+    }
+    const updateScene = (newFigure) => {
+        scene = [newFigure];
+    }
+
+    const recolor = (color) => {
+        scene.forEach(figure => {
             figure.polygons.forEach(polygon => {
-                const points = [
-                    figure.points[polygon.points[0]],
-                    figure.points[polygon.points[1]],
-                    figure.points[polygon.points[2]],
-                    figure.points[polygon.points[3]]
-                ];
-                let { r, g, b } = polygon.color;
-                const lumen = this.math3D.calcIllumination(polygon.lumen, this.LIGHT.lumen);
-                r = Math.round(r * lumen);
-                g = Math.round(g * lumen);
-                b = Math.round(b * lumen);
-
-                const color = polygon.rgbToHex(r, g, b);
-
-                this.graph.polygon(
-                    points.map(point => {
-                        return {
-                            x: this.math3D.xs(point),
-                            y: this.math3D.ys(point)
-                        }
-                    }), color);
-            });
-        }
-        if (this.show.showPoints) {
-            this.selected.points.forEach(point => {
-                this.graph.point(
-                    this.math3D.xs(point),
-                    this.math3D.ys(point)
-                );
+                polygon.color = polygon.hexToRgb(color);
             })
-        }
-        if (this.show.showEdges) {
-            this.selected.edges.forEach(({ p1, p2 }) => {
-                const point1 = this.selected.points[p1];
-                const point2 = this.selected.points[p2];
-                this.graph.line(
-                    this.math3D.xs(point1),
-                    this.math3D.ys(point1),
-                    this.math3D.xs(point2),
-                    this.math3D.ys(point2)
-                );
-            });
-        }
+
+        })
     }
-    render() {
-        return(
-            <div className='graph3D'>
-                <Graph3DUI
-                    show={this.show}
-                    sshowHidePoints={(value) => this.showHidePoints(value)}
-                    showHideEdges={(value) => this.showHideEdges(value)}
-                    showHidePolygons={(value) => this.showHidePolygons(value)}
-                    updateScene={(newFigure) => this.updateScene(newFigure)}
-                    changeColor={(value) => this.changeColor(value)}
-                />
-                <canvas id='canvas3D'></canvas>
-            </div>
-        );
+
+    const updateVarEdges = (statement) => {
+        show.edgeCheck = statement;
     }
+
+    const updateVarPoints = (statement) => {
+        show.pointCheck = statement;
+    }
+
+    const updateVarPolygons = (statement) => {
+        show.polygonsCheck = statement;
+    }
+
+    function renderScene(OutFPS) {
+        if (graph === null) return;
+        graph.clear();
+        scene.forEach(figure => {
+            math3D.calcCenters(figure);
+            math3D.calcDistance(figure, WIN.CAMERA, 'distance');
+            math3D.calcDistance(figure, LIGHT, 'lumen')
+            math3D.sortByArtistAlgoritm(figure.polygons);
+            if (show.polygonsCheck) {
+                figure.polygons.forEach(polygon => {
+                    const points = [
+                        figure.points[polygon.points[0]],
+                        figure.points[polygon.points[1]],
+                        figure.points[polygon.points[2]],
+                        figure.points[polygon.points[3]]
+                    ];
+                    let { r, g, b } = polygon.color;
+                    const lumen = math3D.calcIllumination(polygon.lumen, LIGHT.lumen);
+                    r = Math.round(r * lumen);
+                    g = Math.round(g * lumen);
+                    b = Math.round(b * lumen);
+                    const color = polygon.rgbToHex(r, g, b);
+                    graph.polygon(
+                        points.map(point => {
+                            return {
+                                x: math3D.xs(point),
+                                y: math3D.ys(point)
+                            }
+
+                        }), color);
+
+                })
+            }
+            if (show.edgeCheck) {
+                figure.edges.forEach(({ p1, p2 }) => {
+                    const point1 = figure.points[p1];
+                    const point2 = figure.points[p2];
+                    graph.line(
+                        math3D.xs(point1),
+                        math3D.ys(point1),
+                        math3D.xs(point2),
+                        math3D.ys(point2)
+                    );
+                });
+            }
+            if (show.pointCheck) {
+                figure.points.forEach(point => {
+                    graph.point(
+                        math3D.xs(point),
+                        math3D.ys(point)
+                    );
+                });
+            }
+        })
+        graph.text(WIN.LEFT+0.25, 9.5, OutFPS);
+        const center = new Point();
+        graph.render();
+    }
+
+    return (<>
+        <Graph3DUI 
+            show={show}
+            updateVarPoints={updateVarPoints}
+            updateVarPolygons={updateVarPolygons}
+            updateVarEdges={updateVarEdges}
+            updateScene={updateScene}
+        />
+        <canvas id='canvas3d'></canvas>
+    </>);
 }
+
+export default Graph3D;
