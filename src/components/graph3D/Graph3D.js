@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Graph from '../modules/Graph/Graph';
 import Math3D, {Point, Light, Cube, Ellipsoid, Sphere, Toroid} from '../modules/Math3D';
 import Graph3DUI from './Graph3DUI';
-import useGraph from '../modules/Graph/UseGraph';
+import useGraph from '../Hooks/useGraph';
 // import './Graph3D.css';
 
 const Graph3D = () => {
@@ -17,7 +17,7 @@ const Graph3D = () => {
 
     const LIGHT = new Light(20, 20, 10, 1e4);
     const math3D = new Math3D({ WIN });
-    let scene = [new Cube()];
+    let scene = [new Sphere()];
     const show = {
         edgeCheck: false,
         pointCheck: false,

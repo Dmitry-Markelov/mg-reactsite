@@ -1,7 +1,7 @@
 import Cube from './Cube';
-import Ellipsoid from './Cube';
-import Sphere from './Cube';
-import Toroid from './Cube';
+import Ellipsoid from './Ellipsoid';
+import Sphere from './Sphere';
+import Toroid from './Toroid';
 
 export {
     Cube,

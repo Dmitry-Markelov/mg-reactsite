@@ -1,6 +1,6 @@
 import { Point, Polygon, Edge, Figure } from "../entities";
 class Sphere extends Figure {
-    constructor(r = 10, count = 80) {
+    constructor(r = 10, count = 60) {
         super();
         //points
         const points = [];
