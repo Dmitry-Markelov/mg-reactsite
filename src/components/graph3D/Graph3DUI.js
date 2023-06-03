@@ -1,7 +1,19 @@
 import {useState} from "react"
 import {useCallback} from "react";
 import MyCheckBox from "../myCheckBox/MyCheckBox";
-import { Cube, Ellipsoid, Sphere, Toroid } from "../modules/Math3D";
+import { 
+    Cube,
+    Ellipsoid,
+    Sphere, 
+    Toroid, 
+    EllipticalCylinder, 
+    EllipticalParaboloid, 
+    HyperbolicCylinder, 
+    OneSheetedHyperboloid, 
+    ParabolicCylinder, 
+    SingleHyperboloid,
+    TwoSheetedHyperboloid 
+} from "../modules/Math3D";
 
 const Graph3DUI = ({show, updateVarPoints, updateVarEdges, updateVarPolygons, updateScene}) => {
     const [showPanel, setShowPanel] = useState(false);
@@ -10,6 +22,13 @@ const Graph3DUI = ({show, updateVarPoints, updateVarEdges, updateVarPolygons, up
         Sphere: new Sphere(),
         Toroid: new Toroid(),
         Ellipsoid: new Ellipsoid(),
+        EllipticalCylinder: new EllipticalCylinder(),
+        EllipticalParaboloid: new EllipticalParaboloid(),
+        HyperbolicCylinder: new HyperbolicCylinder(),
+        OneSheetedHyperboloid: new OneSheetedHyperboloid(),
+        ParabolicCylinder: new ParabolicCylinder(),
+        SingleHyperboloid: new SingleHyperboloid(),
+        TwoSheetedHyperboloid: new TwoSheetedHyperboloid(),
     }
     const showHidePanel = useCallback(() => {
         setShowPanel(!showPanel)},

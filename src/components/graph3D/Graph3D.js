@@ -17,7 +17,7 @@ const Graph3D = () => {
 
     const LIGHT = new Light(20, 20, 10, 1e4);
     const math3D = new Math3D({ WIN });
-    let scene = [new Sphere()];
+    let scene = [new Cube()];
     const show = {
         edgeCheck: false,
         pointCheck: false,
