@@ -121,11 +121,6 @@ a:hover {
   align-items: center;
 }
 
-canvas {
-  /* width: 700px;
-  height: 700px; */
-}
-
 #funcList {
   display: inline-block;
   flex-wrap: wrap;
@@ -200,11 +195,6 @@ canvas {
   flex-direction: column;
   flex-wrap: wrap;
 }
-
-.calc-output {
-  
-}
-
 
 textarea {
   width: 350px;
