@@ -1,7 +1,7 @@
 import { Point, Polygon, Edge } from "../entities";
 import Figure from './Figure';
 class HyperbolicParaboloid extends Figure {
-    constructor(count = 20, a = 3, b = 2) {
+    constructor(count = 20, a = 5, b = 4) {
         super({});
     const points = [];
     // точки
