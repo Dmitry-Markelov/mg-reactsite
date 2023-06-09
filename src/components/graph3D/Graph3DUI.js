@@ -3,32 +3,36 @@ import {useCallback} from "react";
 import MyCheckBox from "../myCheckBox/MyCheckBox";
 import { 
     Cube,
-    Ellipsoid,
+    Cone,
+    Cylinder,
+    Ellipsoid, 
     Sphere, 
     Toroid, 
-    EllipticalCylinder, 
-    EllipticalParaboloid, 
-    HyperbolicCylinder, 
-    OneSheetedHyperboloid, 
-    ParabolicCylinder, 
-    SingleHyperboloid,
-    TwoSheetedHyperboloid 
+    OneSheetedHyperboloid,
+    EllipticalCylinder,
+    EllipticalParaboloid,
+    ParabolicCylinder,
+    TwoSheetedHyperboloid,
+    HyperbolicCylinder,
+    HyperbolicParaboloid,
 } from "../modules/Math3D";
 
 const Graph3DUI = ({show, updateVarPoints, updateVarEdges, updateVarPolygons, updateScene}) => {
     const [showPanel, setShowPanel] = useState(false);
     const figures= {
         Cube: new Cube(),
+        Cone: new Cone(),
+        Cylinder: new Cylinder(),
+        Ellipsoid: new Ellipsoid(),
         Sphere: new Sphere(),
         Toroid: new Toroid(),
-        Ellipsoid: new Ellipsoid(),
+        OneSheetedHyperboloid: new OneSheetedHyperboloid(),
         EllipticalCylinder: new EllipticalCylinder(),
         EllipticalParaboloid: new EllipticalParaboloid(),
-        HyperbolicCylinder: new HyperbolicCylinder(),
-        OneSheetedHyperboloid: new OneSheetedHyperboloid(),
         ParabolicCylinder: new ParabolicCylinder(),
-        SingleHyperboloid: new SingleHyperboloid(),
         TwoSheetedHyperboloid: new TwoSheetedHyperboloid(),
+        HyperbolicCylinder: new HyperbolicCylinder(),
+        HyperbolicParaboloid: new HyperbolicParaboloid(),
     }
     const showHidePanel = useCallback(() => {
         setShowPanel(!showPanel)},

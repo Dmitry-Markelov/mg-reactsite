@@ -1,25 +1,29 @@
 import Cube from './Cube';
+import Cone from './Cone';
+import Cylinder from './Cylinder';
 import Ellipsoid from './Ellipsoid';
 import Sphere from './Sphere';
 import Toroid from './Toroid';
+import OneSheetedHyperboloid from './OneSheetedHyperboloid';
 import EllipticalCylinder from './EllipticalCylinder';
 import EllipticalParaboloid from './EllipticalParaboloid';
-import HyperbolicCylinder from './HyperbolicCylinder';
-import OneSheetedHyperboloid from './OneSheetedHyperboloid';
 import ParabolicCylinder from './ParabolicCylinder';
-import SingleHyperboloid from './SingleHyperboloid';
 import TwoSheetedHyperboloid from './TwoSheetedHyperboloid';
+import HyperbolicCylinder from './HyperbolicCylinder';
+import HyperbolicParaboloid from './HyperbolicParaboloid';
 
 export {
     Cube,
-    Ellipsoid,
-    Sphere,
-    Toroid,
+    Cone,
+    Cylinder,
+    Ellipsoid, 
+    Sphere, 
+    Toroid, 
+    OneSheetedHyperboloid,
     EllipticalCylinder,
     EllipticalParaboloid,
-    HyperbolicCylinder,
-    OneSheetedHyperboloid,
     ParabolicCylinder,
-    SingleHyperboloid,
-    TwoSheetedHyperboloid
+    TwoSheetedHyperboloid,
+    HyperbolicCylinder,
+    HyperbolicParaboloid,
 }

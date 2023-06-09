@@ -1,3 +1,4 @@
+import '../../../index.css';
 class Graph {
     constructor({ id, width = 500, height = 500, WIN, callbacks }) {
         this.canvas = document.getElementById(id);
@@ -27,7 +28,7 @@ class Graph {
     sy(y) { return -y * this.WIN.HEIGHT / this.canvas.height; }
 
     clear() {
-        this.context.fillStyle = '#fafafa';
+        this.context.fillStyle = '#808080';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
@@ -57,7 +58,7 @@ class Graph {
         this.context.closePath();
     }
 
-    text(x, y, text, color = "black", font = "12px sans-serif", align = "center") {
+    text(x, y, text, color = "#7dc734", font = "20px sans-serif", align = "center") {
         this.context.font = font;
         this.context.fillStyle = color;
         this.context.textAlign = align;

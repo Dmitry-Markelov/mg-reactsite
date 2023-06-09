@@ -1,7 +1,7 @@
 import {Edge,Point,Polygon} from '../entities'
 import Figure from './Figure'
 class OneSheetedHyperboloid extends Figure {
-    constructor(count = 20, a = 7, b = 6, c = 5) {
+    constructor(count = 20, a = 5, b = 4, c = 3) {
         super();
         //точки
         const points = [];

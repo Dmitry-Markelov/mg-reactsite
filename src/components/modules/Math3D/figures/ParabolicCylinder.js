@@ -2,58 +2,72 @@ import {Edge,Point,Polygon} from '../entities'
 import Figure from './Figure'
 class ParabolicCylinder extends Figure {
     constructor(count = 10, a = 5, b = 2) {
-        super();
-        //точки
+        super({});
         const points = [];
-        const dt = 2 * Math.PI / count;
-        for (let i = -Math.PI; i <= Math.PI; i += dt) {
-            for (let j = -Math.PI; j < Math.PI; j += dt) {
-                points.push(new Point(
-                    b * Math.sinh(i),
-                    a * Math.cosh(i),
-                    j * 2
-                ));
+        const deltaZ = a / count;
+        const deltaT = Math.PI / count;
+        
+        for (let j = -a; j < a; j += deltaZ) {
+            for (let i = 0; i < 2 * Math.PI; i += deltaT) {
+                points.push(
+                    new Point(
+                        Math.sqrt(2 * b * i),
+                        j,
+                        i
+                    )
+                );
             }
         }
-
-        //ребра
-        
+        for (let j = -a; j < a; j += deltaZ) {
+            for (let i = 0; i < 2 * Math.PI; i += deltaT) {
+                points.push(
+                    new Point(
+                        -Math.sqrt(2 * b * i),
+                        j,
+                        i
+                    )
+                );
+            }
+        }
         const edges = [];
         for (let i = 0; i < points.length; i++) {
-            //вдоль
-            if (i + 1 < points.length && (i + 1) % count !== 0) {
-                edges.push(new Edge(
-                    i,
-                    i + 1
-                ));
-            } else if ((i + 1) % count === 0) {
-                edges.push(new Edge(
-                    i,
-                    i + 1 - count
-                ));
-            }
-            //поперек
-            if (i < points.length - count) {
-                edges.push(new Edge(
-                    i,
-                    i + count
-                ));
+            if (points[i + 1]) {
+                if ((i + 1) % (count * 2) !== 0) {
+                    edges.push(new Edge(i, i + 1));
+                }
             }
         }
-
-        //полигоны
+        for (let j = points.length / 2; j < points.length; j++) {
+            if (points[j + count * 2]) {
+                edges.push(new Edge(j, j + count * 2));
+            }
+        }
+        for (let j = 0; j < points.length / 2 - count * 2; j++) {
+            if (points[j + count * 2]) {
+                edges.push(new Edge(j, j + count * 2));
+            }
+        }
         const polygons = [];
-        for (let i = 0; i < points.length; i++) {
-            if (i + 1 + count < points.length && (i + 1) % count !== 0) {
-                polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count]));
-            } else if (i + count < points.length && (i + 1) % count === 0) {
-                polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count]))
+        for (let i = 0; i < points.length / 2 - count * 2; i++) {
+            if (points[i + count * 2 + 1] && (i + 1) % (count * 2) !== 0) {
+                polygons.push(new Polygon([i, i + 1, i + count * 2 + 1, i + count * 2]));
             }
         }
-
+        for (let i = points.length / 2; i < points.length; i++) {
+            if (points[i + count * 2 + 1] && (i + 1) % (count * 2) !== 0) {
+                polygons.push(new Polygon([i, i + 1, i + count * 2 + 1, i + count * 2]));
+            }
+        }
+        
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;
+        
+        this.animations = [
+            { method: 'rotateOY', value: -Math.PI / 500, center: new Point() },
+            { method: 'rotateOY', value: -Math.PI / 500, center: this.center }
+        ];
     }
 }
+
 export default ParabolicCylinder;

@@ -13,7 +13,6 @@ const App = () => {
                 showComponent === 'Graph2D' ? <Graph2D/> :
                     showComponent === 'Graph3D' ? <Graph3D/> :
                         <></>
-
             }
         </div>
     )

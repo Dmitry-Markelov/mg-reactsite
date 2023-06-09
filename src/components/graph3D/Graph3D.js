@@ -166,8 +166,7 @@ const Graph3D = () => {
                 });
             }
         })
-        graph.text(WIN.LEFT+0.25, 9.5, OutFPS);
-        const center = new Point();
+        graph.text(WIN.LEFT+0.35, 9.5, OutFPS);
         graph.render();
     }
 
