@@ -1,6 +1,6 @@
 import { Point, Polygon, Edge, Figure } from "../entities";
 class Toroid extends Figure {
-    constructor(R = 12, r = 7, count = 20) {
+    constructor(R = 12, r = 7, count = 25, color = '#aaaaaaff') {
         super();
         //points
         const points = [];
@@ -31,23 +31,31 @@ class Toroid extends Figure {
         }
         //polygons
         const polygons = [];
-        for(let i = 0; i < points.length; i++) {
+        for(let i = 0; i < points.length-count*2; i++) {
             if (points[i + 1 + count]) {
                 if ((i + 1) % count === 0) {
                     polygons.push(new Polygon([
                         i,
                         i + 1 - count,
                         i + 1,
-                        i + count]));
+                        i + count], color));
                 } else {
                     polygons.push(new Polygon([
                         i,
                         i + 1,
                         i + 1 + count,
-                        i + count]));
+                        i + count], color));
                 }
             }
         }
+
+        for(let i = 0; i < polygons.length * 0.2; i++) {
+            polygons[i].isLit = true;
+            if (i % 2) {
+                polygons[i].color = Polygon.prototype.hexToRgba('#ffffffff')
+            }
+        }
+
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;

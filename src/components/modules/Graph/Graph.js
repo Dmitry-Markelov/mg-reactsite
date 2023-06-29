@@ -32,7 +32,7 @@ class Graph {
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    line(x1, y1, x2, y2, color = '#000', width = 1, isDashed = false) {
+    line(x1, y1, x2, y2, color = '#ffffff', width = 1, isDashed = false) {
         this.context.beginPath();
         this.context.lineWidth = width;
         if (isDashed) {
@@ -48,7 +48,7 @@ class Graph {
         this.context.setLineDash([]);
     }
 
-    point(x, y, color = '#1a2b3c', size = 2) {
+    point(x, y, color = '#ffffff', size = 2) {
         this.context.beginPath();
         this.context.strokeStyle = color;
         this.context.fillStyle = color;

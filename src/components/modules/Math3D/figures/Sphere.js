@@ -1,6 +1,6 @@
 import { Point, Polygon, Edge, Figure } from "../entities";
 class Sphere extends Figure {
-    constructor(r = 10, count = 60) {
+    constructor(r = 10, count = 20) {
         super();
         //points
         const points = [];
@@ -57,6 +57,17 @@ class Sphere extends Figure {
             points.length - 1
         ],));
 
+        delete polygons[polygons.length/2]
+        delete polygons[polygons.length/2+1]
+        delete polygons[polygons.length/2+1-count]
+        delete polygons[polygons.length/2+1-count-1]
+
+        delete polygons[polygons.length/2-count/2]
+        delete polygons[polygons.length/2+1-count/2]
+        delete polygons[polygons.length/2-count/2+count]
+        delete polygons[polygons.length/2+1-count/2+count]
+
+        
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;

@@ -17,7 +17,7 @@ const Graph3D = () => {
 
     const LIGHT = new Light(15, 15, 10, 1e4);
     const math3D = new Math3D({ WIN });
-    let scene = [new ParabolicCylinder()];
+    let scene = [new Sphere()];
     const show = {
         edgeCheck: false,
         pointCheck: false,
@@ -129,13 +129,14 @@ const Graph3D = () => {
                         figure.points[polygon.points[3]]
                     ];
                     let { r, g, b, alpha } = polygon.color;
-                    const lumen = math3D.calcIllumination(polygon.lumen, LIGHT.lumen);
+                    let lumen = math3D.calcIllumination(polygon.lumen, LIGHT.lumen);
+                    if (polygon.isLit) {
+                        lumen = 1
+                    }
                     r = Math.round(r * lumen);
                     g = Math.round(g * lumen);
                     b = Math.round(b * lumen);
                     const color = polygon.rgbaToHex(r, g, b, alpha);
-                    // console.log(polygon.alpha);
-                    // const color = polygon.colorA;
                     graph.polygon(
                         points.map(point => {
                             return {

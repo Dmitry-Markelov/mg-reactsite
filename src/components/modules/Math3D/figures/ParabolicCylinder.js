@@ -20,7 +20,7 @@ class ParabolicCylinder extends Figure {
 
     // Ребра
     const edges = [];
-    for (let i = 0; i < points.length; i++) {
+    for (let i = 0; i < points.length-count; i++) {
       // Вдоль
       if (i + 1 < points.length && (i + 1) % count !== 0) {
         edges.push(new Edge(i, i + 1));
@@ -43,17 +43,17 @@ class ParabolicCylinder extends Figure {
           if (((i + k * 2 + 1) % 2) <= 0) {
               if (i + 1 + count < points.length && (i + 1) % count !== 0) {
                 if ((s % 2 == 0) && (i < count)) {
-                  polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#008000"));
+                  polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#008000ff"));
                 } else if ((s % 2 == 0) && (i > points.length-count*2)) {
-                  polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#008000"));
+                  polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#008000ff"));
                 } else {
-                  polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#ffffff"));
+                  polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#ffffffff"));
                   }
                   s++;
               }
           } else {
               if (i + 1 + count < points.length && (i + 1) % count !== 0) {
-                  polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#008000"));
+                  polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#008000ff"));
               }
           }
     }

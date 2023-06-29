@@ -1,7 +1,7 @@
 import Point from './Point';
 
 export default class Polygon {
-    constructor(points = [], color = '#f77f00') {
+    constructor(points = [], color = '#f77f00ff') {
         this.points = points;
         this.center = new Point;
         this.distance = 0;
@@ -14,7 +14,7 @@ export default class Polygon {
             r: parseInt(result[1], 16),
             g: parseInt(result[2], 16),
             b: parseInt(result[3], 16),
-            alpha: parseInt(result[4], 16),
+            alpha: parseInt(result[4], 16)/255,
         } : {
             r: 1,
             g: 2,
@@ -28,7 +28,7 @@ export default class Polygon {
             r: parseInt(result[1], 16),
             g: parseInt(result[2], 16),
             b: parseInt(result[3], 16),
-            alpha: parseInt(result[4], 16),
+            alpha: parseInt(result[4], 16)/255,
         } : {
             r: 1,
             g: 2,
@@ -40,10 +40,10 @@ export default class Polygon {
         return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
     }
     rgbaToHex(r, g, b, a = 1) {
-        r = r.toString(16);
-        g = g.toString(16);
-        b = b.toString(16);
-        a = Math.round(a * 255).toString(16).slice(-2);
+        r = Math.round(r).toString(16);
+        g = Math.round(g).toString(16);
+        b = Math.round(b).toString(16);
+        a = Math.round(a * 255).toString(16);
         if (r.length == 1)
             r = "0" + r;
         if (g.length == 1)
@@ -52,7 +52,6 @@ export default class Polygon {
             b = "0" + b;
         if (a.length == 1)
             a = "0" + a;
-        console.log("#" + r + g + b + a)
         return "#" + r + g + b + a;
     }
 }

@@ -1,7 +1,7 @@
 import { Edge, Point, Polygon } from '../entities'
 import Figure from './Figure'
 class TwoSheetedHyperboloid extends Figure {
-    constructor(count = 20, a = 7, b = 6, c = 15) {
+    constructor(count = 20, a = 7, b = 6, c = 15, alpha = 0.5) {
         super();
         //точки
         const points = [];
@@ -87,16 +87,16 @@ class TwoSheetedHyperboloid extends Figure {
         const dc = 255/points.length/1.5;
         for (let i = 0; i < points.length / 2 - count; i++) {
             if (i + 1 + count < points.length && (i + 1) % count !== 0) {
-                polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], Polygon.prototype.rgbToHex((2*255-i*dc), 60, 120)));
+                polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], Polygon.prototype.rgbaToHex((255-i*dc), 60, 120, alpha)));
             } else if (i + count < points.length && (i + 1) % count === 0) {
-                polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count], Polygon.prototype.rgbToHex((2*255-i*dc), 60, 120)))
+                polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count], Polygon.prototype.rgbaToHex((255-i*dc), 60, 120, alpha)))
             }
         }
         for (let i = points.length / 2; i < points.length; i++) {
             if (i + 1 + count < points.length && (i + 1) % count !== 0) {
-                polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], Polygon.prototype.rgbToHex(255-i*dc, 60, 120)));
+                polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], Polygon.prototype.rgbaToHex(255-i*dc, 60, 120, alpha)));
             } else if (i + count < points.length && (i + 1) % count === 0) {
-                polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count], Polygon.prototype.rgbToHex(255-i*dc, 60, 120)))
+                polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count], Polygon.prototype.rgbaToHex(255-i*dc, 60, 120, alpha)))
             }
         }
 
