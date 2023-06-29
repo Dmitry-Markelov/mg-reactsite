@@ -34,67 +34,59 @@ class ParabolicCylinder extends Figure {
     }
     
     const polygons = [];
-    let s = 0;
-    let k = 0;
     for (let i = 0; i < points.length; i++) {
-          if ((i % count) == 0) {
-              k++;
-    }
-          if (((i + k * 2 + 1) % 2) <= 0) {
-              if (i + 1 + count < points.length && (i + 1) % count !== 0) {
-                if ((s % 2 == 0) && (i < count)) {
-                  polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#008000ff"));
-                } else if ((s % 2 == 0) && (i > points.length-count*2)) {
-                  polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#008000ff"));
-                } else {
-                  polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#ffffffff"));
-                  }
-                  s++;
-              }
-          } else {
-              if (i + 1 + count < points.length && (i + 1) % count !== 0) {
-                  polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#008000ff"));
-              }
-          }
+        if (i + 1 + count < points.length && (i + 1) % count !== 0) {
+            polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count]));
+        }
     }
 
 
-      
 
+    // let s = 0;
+    // let k = 0;
+    // for (let i = 0; i < points.length; i++) {
+    //       if ((i % count) == 0) {
+    //           k++;
+    // }
+    //       if (((i + k * 2 + 1) % 2) <= 0) {
+    //           if (i + 1 + count < points.length && (i + 1) % count !== 0) {
+    //             if ((s % 2 == 0) && (i < count)) {
+    //               polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#008000ff"));
+    //             } else if ((s % 2 == 0) && (i > points.length-count*2)) {
+    //               polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#008000ff"));
+    //             } else {
+    //               polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#ffffffff"));
+    //               }
+    //               s++;
+    //           }
+    //       } else {
+    //           if (i + 1 + count < points.length && (i + 1) % count !== 0) {
+    //               polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], "#008000ff"));
+    //           }
+    //       }
+    // }
 
-
-    // Полигоны
-    // let s = count;
-    // let g = 0;
     // const polygons = [];
-    // for (let i = 1; i < points.length; i++) {
-    //   if (i + 1 + count < points.length && (i + 1) % count !== 0) {
-    //     if(s % count == 0) {
-    //         if(s < count*count-i) {
-    //             polygons.push(new Polygon([(i+count)+count+g, (i+count*2)+count+g, (i+count*2+1)+count+g, (i+count+1)+count+g], '#f77f00'));
-    //             polygons.push(new Polygon([(i+count+1)+count+g, (i+count*2+1)+count+g, (i+count*2+2)+count+g, (i+count+2)+count+g], '#f77f00'));
-    //             // polygons.push(new Polygon([(i+count+1)+count+g+1, (i+count*2+1)+count+g+1, (i+count*2+3)+count+g+1, (i+count+3)+count+g+1], color));
-    //             g++;
-    //         }
-    //         // } else {
-    //         //     polygons.push(new Polygon([(i+count)+count-g, (i+count*2)+count-g, (i+count*2+1)+count-g, (i+count+1)+count-g], '#f77f00'));
-    //         //     polygons.push(new Polygon([(i+count+1)+count-g, (i+count*2+1)+count-g, (i+count*2+2)+count-g, (i+count+2)+count-g], '#f77f00'));
-    //         // }
-    //     } else {
-    //         // polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], color));
+    // for (let i = count*2; i < points.length+count; i++) {
+    //   if (i + 3 + (2 * count) < points.length && (i + 1) % count !== 0) {
+    //     // Раскраска в шахматном порядке
+    //     const row = Math.floor(i / count);
+    //     const column = i % count;
+    //     const isCenter = row % 3 === 1 && column % 3 === 1;
+    //     const color1 = '#ffff00';
+
+    //     if (!isCenter) {
+    //       const isEvenRow = Math.floor(row / 3) % 2 === 0;
+    //       const isEvenColumn = Math.floor(column / 3) % 2 === 0;
+    //       const isWhite = (isEvenRow && isEvenColumn) || (!isEvenRow && !isEvenColumn);
+    //       const polygonColor = isWhite ? color1 : color;
+
+
+    //       polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], polygonColor));
     //     }
-    //     // polygons.push(new Polygon([ count,                       count*2,                           count*2+1,                           count+1], color));
-    //     // polygons.push(new Polygon([(count)+count+1,             (count+count)+count+1,             (count+count+1)+count+1,             (count+1)+count+1], color));
-    //     // polygons.push(new Polygon([(count+count)+count+2,       (count+count+count)+count+2,       (count+count+count+1)+count+2,       (count+count+1)+count+2], color));
-    //     // polygons.push(new Polygon([(count+count+count)+count+3, (count+count+count+count)+count+3, (count+count+count+count+1)+count+3, (count+count+count+1)+count+3], color));
-
-    //         // polygons.push(new Polygon([count*count-count-2, ((count-1)*count)-count-2, ((count-1)*count)-count-3, count*count-count-3], '#ff0000'));
-
-
-
-    //     polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], color));
-    //     s++;  
-    //     }
+    //     polygons.push(new Polygon([count*count-count-1, ((count-1)*count)-count-1, ((count-1)*count)-count-2, count*count-count-2], color));
+    //     polygons.push(new Polygon([count*count-count-2, ((count-1)*count)-count-2, ((count-1)*count)-count-3, count*count-count-3], color1));
+    //   }
     // }
 
     this.points = points;

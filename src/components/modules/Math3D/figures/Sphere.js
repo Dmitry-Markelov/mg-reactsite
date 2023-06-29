@@ -56,17 +56,6 @@ class Sphere extends Figure {
             points.length - count,
             points.length - 1
         ],));
-
-        delete polygons[polygons.length/2]
-        delete polygons[polygons.length/2+1]
-        delete polygons[polygons.length/2+1-count]
-        delete polygons[polygons.length/2+1-count-1]
-
-        delete polygons[polygons.length/2-count/2]
-        delete polygons[polygons.length/2+1-count/2]
-        delete polygons[polygons.length/2-count/2+count]
-        delete polygons[polygons.length/2+1-count/2+count]
-
         
         this.points = points;
         this.edges = edges;

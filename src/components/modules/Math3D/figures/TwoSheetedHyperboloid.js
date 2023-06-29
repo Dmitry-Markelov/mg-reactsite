@@ -46,57 +46,18 @@ class TwoSheetedHyperboloid extends Figure {
         //полигоны
         const polygons = [];
 
-
-        // const dc = 255 / this.points.length;
-
-        // for (let i = 0; i < this.points.length / 2 - count; i++) {
-
-        //     if (i + 1 + count < this.points.length && (i + 1) % count !== 0) {
-        //         this.polygons.push(
-        //             new Polygon(
-        //                 [i, i + 1, i + 1 + count, i + count],
-        //                 Polygon.prototype.rgbToHex(dc * i, 20, 160)
-        //             ));
-        //     } else if (i + count < this.points.length && (i + 1) % count === 0) {
-        //         this.polygons.push(
-        //             new Polygon(
-        //                 [i, i + 1 - count, i + 1, i + count],
-        //                 Polygon.prototype.rgbToHex(dc * i, 20, 160)
-        //             ));
-        //     }
-        // }
-
-        // for (let i = this.points.length / 2; i < this.points.length; i++) {
-        //     if (i + 1 + count < this.points.length && (i + 1) % count !== 0) {
-        //         this.polygons.push(
-        //             new Polygon(
-        //                 [i, i + 1, i + 1 + count, i + count],
-        //                 Polygon.prototype.rgbToHex(dc * i, 20, 160)
-        //             ));
-        //     } else if (i + count < this.points.length && (i + 1) % count === 0) {
-        //         this.polygons.push(
-        //             new Polygon(
-        //                 [i, i + 1 - count, i + 1, i + count],
-        //                 Polygon.prototype.rgbToHex(dc * i, 20, 160)
-        //             ));
-        //     }
-        // }
-
-
-
-        const dc = 255/points.length/1.5;
         for (let i = 0; i < points.length / 2 - count; i++) {
             if (i + 1 + count < points.length && (i + 1) % count !== 0) {
-                polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], Polygon.prototype.rgbaToHex((255-i*dc), 60, 120, alpha)));
+                polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count]));
             } else if (i + count < points.length && (i + 1) % count === 0) {
-                polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count], Polygon.prototype.rgbaToHex((255-i*dc), 60, 120, alpha)))
+                polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count]))
             }
         }
         for (let i = points.length / 2; i < points.length; i++) {
             if (i + 1 + count < points.length && (i + 1) % count !== 0) {
-                polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], Polygon.prototype.rgbaToHex(255-i*dc, 60, 120, alpha)));
+                polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count]));
             } else if (i + count < points.length && (i + 1) % count === 0) {
-                polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count], Polygon.prototype.rgbaToHex(255-i*dc, 60, 120, alpha)))
+                polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count]))
             }
         }
 
