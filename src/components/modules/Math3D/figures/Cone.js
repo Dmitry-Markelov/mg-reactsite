@@ -54,12 +54,20 @@ class Cone extends Figure {
             }
         }
 
-        const polygons = [];
-        for (let i = 0; i < points.length; i++) {
-            if (i + 1 + count < points.length && (i + 1) % count !== 0) {
-                polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count]));
-            } else if (i + count < points.length && (i + 1) % count === 0) {
-                polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count]))
+        const polygons = []
+        const dc = 255 / a;
+
+        for (let i = 0; i < a; i++) {
+            const currentColor = Polygon.prototype.rgbToHex(dc*i, 60, 80);
+            for (let j = 0; j < count; j++) {
+                this.polygons.push(
+                    new Polygon([
+                        (i + 1) % a * count + (j + 1) % count,
+                        (i + 1) % a * count + j % count,
+                        i * count + j % count,
+                        i * count + (j + 1) % count,
+                    ], currentColor)
+                );
             }
         }
 
