@@ -39,6 +39,10 @@ class Cylinder extends Figure {
         }
 
         const polygons = [];
+<<<<<<< Updated upstream
+=======
+        
+>>>>>>> Stashed changes
         for (let i = 0; i < points.length; i++) {
             if (i + 1 + count < points.length && (i + 1) % count !== 0) {
                 polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count]));

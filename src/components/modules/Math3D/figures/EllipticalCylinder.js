@@ -51,6 +51,7 @@ class EllipticalCylinder extends Figure {
                 polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count]))
             }
         }
+<<<<<<< Updated upstream
         const upperBasePolygons = [];
         const lowerBasePolygons = [];
         polygons.push(new Polygon([points.length - 1, points.length - count - 1, points.length - 2 * count, points.length - count]));
@@ -59,6 +60,16 @@ class EllipticalCylinder extends Figure {
         polygons.push(new Polygon(lowerBasePolygons));
         polygons.push(new Polygon(upperBasePolygons));
 
+=======
+        
+        // for(let i = 0; i < polygons.length * 0.2; i++) {
+        //     polygons[i].isLit = true;
+        //     if (i % 2) {
+        //         polygons[i].color = Polygon.prototype.hexToRgba('#ffffffff')
+        //     }
+        // }
+        
+>>>>>>> Stashed changes
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;

@@ -56,7 +56,11 @@ class Sphere extends Figure {
             points.length - count,
             points.length - 1
         ],));
+<<<<<<< Updated upstream
 
+=======
+        
+>>>>>>> Stashed changes
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;

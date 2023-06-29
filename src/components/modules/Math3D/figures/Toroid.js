@@ -48,6 +48,17 @@ class Toroid extends Figure {
                 }
             }
         }
+<<<<<<< Updated upstream
+=======
+
+        // for(let i = 0; i < polygons.length * 0.2; i++) {
+        //     polygons[i].isLit = true;
+        //     if (i % 2) {
+        //         polygons[i].color = Polygon.prototype.hexToRgba('#ffffffff')
+        //     }
+        // }
+
+>>>>>>> Stashed changes
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;
