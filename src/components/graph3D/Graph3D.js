@@ -128,13 +128,13 @@ const Graph3D = () => {
                         figure.points[polygon.points[2]],
                         figure.points[polygon.points[3]]
                     ];
-                    let { r, g, b} = polygon.color;
+                    let { r, g, b, alpha } = polygon.color;
                     const lumen = math3D.calcIllumination(polygon.lumen, LIGHT.lumen);
                     r = Math.round(r * lumen);
                     g = Math.round(g * lumen);
                     b = Math.round(b * lumen);
-                    let a = 1;
-                    const color = polygon.rgbaToHex(r, g, b, a);
+                    const color = polygon.rgbaToHex(r, g, b, alpha);
+                    // console.log(polygon.alpha);
                     // const color = polygon.colorA;
                     graph.polygon(
                         points.map(point => {

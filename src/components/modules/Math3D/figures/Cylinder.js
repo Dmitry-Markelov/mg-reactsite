@@ -42,7 +42,7 @@ class Cylinder extends Figure {
         
         const dc = 255/points.length;
         for (let i = 0; i < points.length; i++) {
-            const color1 = Polygon.prototype.rgbToHex(i*dc, 60, 80);
+            const color1 = Polygon.prototype.rgbaToHex(i*dc, 60, 80);
             if (i + 1 + count < points.length && (i + 1) % count !== 0) {
                 polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count], color1));
             } else if (i + count < points.length && (i + 1) % count === 0) {
