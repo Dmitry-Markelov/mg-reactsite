@@ -28,7 +28,7 @@ class Graph {
     sy(y) { return -y * this.WIN.HEIGHT / this.canvas.height; }
 
     clear() {
-        this.context.fillStyle = '#808080';
+        this.context.fillStyle = '#000000';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
