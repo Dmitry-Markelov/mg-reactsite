@@ -51,16 +51,6 @@ class EllipticalCylinder extends Figure {
                 polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count]))
             }
         }
-<<<<<<< Updated upstream
-        const upperBasePolygons = [];
-        const lowerBasePolygons = [];
-        polygons.push(new Polygon([points.length - 1, points.length - count - 1, points.length - 2 * count, points.length - count]));
-        for (let i = 0; i < count; i++) { lowerBasePolygons.push(i) }
-        for (let i = points.length - 1; i >= points.length - count; i--) { upperBasePolygons.push(i) }
-        polygons.push(new Polygon(lowerBasePolygons));
-        polygons.push(new Polygon(upperBasePolygons));
-
-=======
         
         // for(let i = 0; i < polygons.length * 0.2; i++) {
         //     polygons[i].isLit = true;
@@ -69,7 +59,6 @@ class EllipticalCylinder extends Figure {
         //     }
         // }
         
->>>>>>> Stashed changes
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;

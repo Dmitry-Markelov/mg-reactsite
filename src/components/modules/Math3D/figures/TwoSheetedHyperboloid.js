@@ -1,11 +1,7 @@
 import {Edge,Point,Polygon} from '../entities'
 import Figure from './Figure'
 class TwoSheetedHyperboloid extends Figure {
-<<<<<<< Updated upstream
-    constructor(count = 20, a = 7, b = 6, c = 5) {
-=======
     constructor(count = 20, a = 7, b = 6, c = 15) {
->>>>>>> Stashed changes
         super();
         //точки
         const points = [];

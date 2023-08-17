@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import Header from './components/header/Header';
+import Header from './components/Header/Header';
 import Graph3D from './components/graph3D/Graph3D';
 import Graph2D from './components/graph2D/Graph2D';
 import Calculator from './components/calculator/Calculator';
