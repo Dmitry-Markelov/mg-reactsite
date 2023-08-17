@@ -1,7 +1,7 @@
 import {Edge,Point,Polygon} from '../entities'
 import Figure from './Figure'
 class EllipticalCylinder extends Figure {
-    constructor(count = 20, h = 15, a = 6, b = 10) {
+    constructor(count = 20, h = 15, a = 6, b = 10, color = '#ffffffff') {
         super();
         //точки
         const points = [];
@@ -11,7 +11,7 @@ class EllipticalCylinder extends Figure {
                 for (let j = 0; j < 2 * Math.PI; j += dt) {
                     points.push(new Point(
                         b * Math.sin(j),
-                        p,
+                        p-8,
                         a * Math.cos(i) * Math.cos(j),
                     ));
                 }
@@ -64,4 +64,5 @@ class EllipticalCylinder extends Figure {
         this.polygons = polygons;
     }
 }
+
 export default EllipticalCylinder;

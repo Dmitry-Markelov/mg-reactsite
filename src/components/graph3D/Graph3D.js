@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Graph from '../modules/Graph/Graph';
-import Math3D, {Point, Light, Cube, Ellipsoid, Sphere, Toroid} from '../modules/Math3D';
+import Math3D, {Point, Light, Cube, Ellipsoid, Sphere, Toroid, ParabolicCylinder, Cylinder, TwoSheetedHyperboloid} from '../modules/Math3D';
 import Graph3DUI from './Graph3DUI';
 import useGraph from '../Hooks/useGraph';
 // import './Graph3D.css';
@@ -15,9 +15,9 @@ const Graph3D = () => {
         CAMERA: new Point(0, 0, 50)
     };
 
-    const LIGHT = new Light(20, 20, 10, 1e4);
+    const LIGHT = new Light(15, 15, 10, 1e4);
     const math3D = new Math3D({ WIN });
-    let scene = [new Cube()];
+    let scene = [new Sphere()];
     const show = {
         edgeCheck: false,
         pointCheck: false,
@@ -128,12 +128,15 @@ const Graph3D = () => {
                         figure.points[polygon.points[2]],
                         figure.points[polygon.points[3]]
                     ];
-                    let { r, g, b } = polygon.color;
-                    const lumen = math3D.calcIllumination(polygon.lumen, LIGHT.lumen);
+                    let { r, g, b, alpha } = polygon.color;
+                    let lumen = math3D.calcIllumination(polygon.lumen, LIGHT.lumen);
+                    if (polygon.isLit) {
+                        lumen = 1
+                    }
                     r = Math.round(r * lumen);
                     g = Math.round(g * lumen);
                     b = Math.round(b * lumen);
-                    const color = polygon.rgbToHex(r, g, b);
+                    const color = polygon.rgbaToHex(r, g, b, alpha);
                     graph.polygon(
                         points.map(point => {
                             return {

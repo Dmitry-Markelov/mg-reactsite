@@ -46,6 +46,7 @@ class HyperbolicParaboloid extends Figure {
         }
     }
 
+
     this.points = points;
     this.edges = edges;
     this.polygons = polygons;

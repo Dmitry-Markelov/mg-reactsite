@@ -1,7 +1,7 @@
-import {Edge,Point,Polygon} from '../entities'
+import { Edge, Point, Polygon } from '../entities'
 import Figure from './Figure'
 class TwoSheetedHyperboloid extends Figure {
-    constructor(count = 20, a = 7, b = 6, c = 15) {
+    constructor(count = 20, a = 7, b = 6, c = 15, alpha = 0.5) {
         super();
         //точки
         const points = [];
@@ -17,7 +17,11 @@ class TwoSheetedHyperboloid extends Figure {
         }
         for (let i = 0; i <= Math.PI; i += dt) {
             for (let j = 0; j < 2 * Math.PI; j += dt) {
-                points.push(new Point(-a * Math.sinh(i) * Math.cos(j), -c * Math.cosh(i), -b * Math.cosh(i) * Math.sin(j)));
+                points.push(new Point(
+                    -a * Math.sinh(i) * Math.cos(j),
+                    -c * Math.cosh(i),
+                    -b * Math.cosh(i) * Math.sin(j)
+                ));
             }
         }
 
@@ -37,9 +41,11 @@ class TwoSheetedHyperboloid extends Figure {
                 ));
             }
         }
-
+        
+        this.points = points;
         //полигоны
         const polygons = [];
+
         for (let i = 0; i < points.length / 2 - count; i++) {
             if (i + 1 + count < points.length && (i + 1) % count !== 0) {
                 polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count]));
@@ -55,7 +61,6 @@ class TwoSheetedHyperboloid extends Figure {
             }
         }
 
-        this.points = points;
         this.edges = edges;
         this.polygons = polygons;
     }

@@ -20,17 +20,17 @@ import {
 const Graph3DUI = ({show, updateVarPoints, updateVarEdges, updateVarPolygons, updateScene}) => {
     const [showPanel, setShowPanel] = useState(false);
     const figures= {
+        Sphere: new Sphere(),
+        Cylinder: new Cylinder(),
+        ParabolicCylinder: new ParabolicCylinder(),
+        TwoSheetedHyperboloid: new TwoSheetedHyperboloid(),
         Cube: new Cube(),
         Cone: new Cone(),
-        Cylinder: new Cylinder(),
         Ellipsoid: new Ellipsoid(),
-        Sphere: new Sphere(),
         Toroid: new Toroid(),
         OneSheetedHyperboloid: new OneSheetedHyperboloid(),
         EllipticalCylinder: new EllipticalCylinder(),
         EllipticalParaboloid: new EllipticalParaboloid(),
-        ParabolicCylinder: new ParabolicCylinder(),
-        TwoSheetedHyperboloid: new TwoSheetedHyperboloid(),
         HyperbolicCylinder: new HyperbolicCylinder(),
         HyperbolicParaboloid: new HyperbolicParaboloid(),
     }

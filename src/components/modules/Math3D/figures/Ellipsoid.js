@@ -1,6 +1,6 @@
 import { Point, Polygon, Edge, Figure } from "../entities";
 class Ellipsoid extends Figure {
-    constructor(x = 12, y = 7, z = 9, count = 20) {
+    constructor(x = 10, y = 7, z = 9, count = 20, color = '#ffffff') {
         super();
         //points
         const points = [];

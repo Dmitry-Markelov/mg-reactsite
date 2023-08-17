@@ -1,6 +1,6 @@
 import { Point, Polygon, Edge, Figure } from "../entities";
 class Cylinder extends Figure {
-    constructor(a = 15, b = 10, c = 10,count = 20) {
+    constructor(a = 15, b = 10, c = 10, count = 70, color = '#ffffff') {
         super({});
 
         const points = [];
@@ -37,7 +37,7 @@ class Cylinder extends Figure {
                 ));
             }
         }
-
+        
         const polygons = [];
         for (let i = 0; i < points.length; i++) {
             if (i + 1 + count < points.length && (i + 1) % count !== 0) {
