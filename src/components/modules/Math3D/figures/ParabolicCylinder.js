@@ -17,7 +17,6 @@ class ParabolicCylinder extends Figure {
           ));
       }
     }
-
     // Ребра
     const edges = [];
     for (let i = 0; i < points.length-count; i++) {

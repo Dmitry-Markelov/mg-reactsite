@@ -77,7 +77,6 @@ class Toroid extends Figure {
         //         polygons[i].color = Polygon.prototype.hexToRgba('#ffffffff')
         //     }
         // }
-
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;

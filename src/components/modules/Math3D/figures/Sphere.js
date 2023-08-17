@@ -116,7 +116,6 @@ class Sphere extends Figure {
 
         // delete polygons[0]
         // delete polygons[1]
-
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;
