@@ -38,21 +38,14 @@ class Toroid extends Figure {
                         i,
                         i + 1 - count,
                         i + 1,
-                        i + count], color));
+                        i + count]));
                 } else {
                     polygons.push(new Polygon([
                         i,
                         i + 1,
                         i + 1 + count,
-                        i + count], color));
+                        i + count]));
                 }
-            }
-        }
-
-        for(let i = 0; i < polygons.length * 0.2; i++) {
-            polygons[i].isLit = true;
-            if (i % 2) {
-                polygons[i].color = Polygon.prototype.hexToRgba('#ffffffff')
             }
         }
 

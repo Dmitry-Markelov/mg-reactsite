@@ -31,41 +31,20 @@ class Sphere extends Figure {
         }
         //polygons
         const polygons = [];
-        for(let i = 0; i < points.length; i++) {
-            if (points[i + 1 + count]) {
-                if ((i + 1) % count === 0) {
-                    polygons.push(new Polygon([
-                        i,
-                        i + 1 - count,
-                        i + 1,
-                        i + count]
-                        ));
-                } else {
-                    polygons.push(new Polygon([
-                        i,
-                        i + 1,
-                        i + 1 + count,
-                        i + count]
-                        ));
+        for (let i = 0; i < points.length; i++) {
+            if (i + 1 + count < points.length && (i + 1) % count !== 0) {
+                polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count]));
+            } else if ((i + count) < points.length && (i + 1) % count === 0) {
+                polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count]))
+            } else {
+                if (i + 1 + count < points.length && (i + 1) % count !== 0) {
+                    polygons.push(new Polygon([i, i + 1, i + 1 + count, i + count]));
+                } else if ((i + count) < points.length && (i + 1) % count === 0) {
+                    polygons.push(new Polygon([i, i + 1 - count, i + 1, i + count]))
                 }
             }
         }
-        polygons.push(new Polygon([
-            points.length - 1 - count,
-            points.length - 2 * count,
-            points.length - count,
-            points.length - 1
-        ],));
-
-        delete polygons[polygons.length/2]
-        delete polygons[polygons.length/2+1]
-        delete polygons[polygons.length/2+1-count]
-        delete polygons[polygons.length/2+1-count-1]
-
-        delete polygons[polygons.length/2-count/2]
-        delete polygons[polygons.length/2+1-count/2]
-        delete polygons[polygons.length/2-count/2+count]
-        delete polygons[polygons.length/2+1-count/2+count]
+        
 
         
         this.points = points;

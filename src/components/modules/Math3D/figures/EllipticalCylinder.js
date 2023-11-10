@@ -52,13 +52,6 @@ class EllipticalCylinder extends Figure {
             }
         }
         
-        for(let i = 0; i < polygons.length * 0.2; i++) {
-            polygons[i].isLit = true;
-            if (i % 2) {
-                polygons[i].color = Polygon.prototype.hexToRgba('#ffffffff')
-            }
-        }
-        
         this.points = points;
         this.edges = edges;
         this.polygons = polygons;

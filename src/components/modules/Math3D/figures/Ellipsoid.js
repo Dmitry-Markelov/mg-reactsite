@@ -38,13 +38,13 @@ class Ellipsoid extends Figure {
                         i,
                         i + 1 - count,
                         i + 1,
-                        i + count], Polygon.prototype.rgbaToHex(60, 150, 30, 0.1)));
+                        i + count]));
                 } else {
                     polygons.push(new Polygon([
                         i,
                         i + 1,
                         i + 1 + count,
-                        i + count], Polygon.prototype.rgbaToHex(60, 150, 30, 0.1)));
+                        i + count]));
                 }
             }
             
