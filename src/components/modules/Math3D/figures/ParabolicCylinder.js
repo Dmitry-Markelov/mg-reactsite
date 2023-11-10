@@ -1,36 +1,36 @@
 import { Point, Polygon, Edge, Figure } from "../entities";
 export default class ParabolicCylinder extends Figure {
-    constructor(count = 13, a = 2, b = 2, c = 10, color = '#d79196ff') {
+    constructor(count = 12, a = 2, b = 6, c = 10, color = '#d79196ff') {
         super();
 
         const points = [];
         const edges = [];
         const polygons = [];
 
-        const dt = 2 * Math.PI / count;
-        for (let i = -Math.PI; i <= Math.PI; i += dt) {
-            for (let j = -Math.PI; j <= Math.PI; j += dt) {
+        for (let i = -count / 2; i <= count / 2; i++) {
+            for (let j = -count / 2; j <= count / 2; j++) {
                 points.push(new Point(
-                    b * Math.sinh(i),
-                    a * Math.cosh(i),
-                    c * j,
+                    b * Math.sinh(i / Math.PI),
+                    a * Math.cosh(i / Math.PI),
+                    c * j / Math.PI
                 ));
             }
         }
 
         for (let i = 0; i < points.length - 1; i++) {
-            if ((i + 1) % (count + 1)) {
+            if (i % (count + 1) !== count) {
+                console.log(i % (count + 1), count, i, i + 1, points.length)
                 edges.push(new Edge(i, i + 1));
             }
 
-            if (points[i + 1 + count]) {
-                edges.push(new Edge(i, i + (1 + count)));
+            if (points[i + count + 1]) {
+                edges.push(new Edge(i, i + count + 1));
             }
         }
 
         for (let i = 0; i < points.length; i++) {
-            if (points[i + 1 + count] && (i + 1) % (count + 1)) {
-                polygons.push(new Polygon([i, i + 1, i + 1 + (1 + count), i + (1 + count)], color));
+            if (points[i + 1 + count] && i % (count + 1) !== count) {
+                polygons.push(new Polygon([i, i + 1, i + 2 + count, i + 1 + count], color));
             }
         }
 
